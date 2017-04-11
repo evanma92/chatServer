@@ -54,6 +54,10 @@ public class TCPServerThreads extends Thread{
 							Writer out = new OutputStreamWriter(activeSockets.get(i).getOutputStream(), "UTF-8");
 							out.write(senderName + ": " + line + "\n");
 			                out.flush();
+						} else {
+							Writer out = new OutputStreamWriter(this.socket.getOutputStream(), "UTF-8");
+							out.write("Your message was sent!\n");
+			                out.flush();
 						}
 					}
 					
