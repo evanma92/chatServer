@@ -17,7 +17,7 @@ public class TCPServer extends Thread{
 	
 	@Override
 	public void run(){
-//		activeConnections.add("");
+
 		ServerSocket ss = null;
 		
 		try {
@@ -33,15 +33,15 @@ public class TCPServer extends Thread{
 			try {
 				client = ss.accept();
 				clientName = client.getInetAddress().getHostName();
-//				if (activeConnections.contains(clientName)){
-//					System.err.println("Client exists. Closing the server");
-//	            	ss.close();
-//	            	break;
-//				}
+				if (activeConnections.contains(clientName)){
+					System.err.println("Client exists. Closing the server");
+	            	ss.close();
+	            	break;
+				}
 				
 				activeConnections.add(clientName);
 				activeSockets.add(client);
-				System.out.println("Client Accepted");
+				System.out.println(clientName + " Accepted");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -49,20 +49,6 @@ public class TCPServer extends Thread{
 			
 			new TCPServerThreads(client, this).start();
 			
-//            String clientName = s.getInetAddress().getHostName();
-//            System.out.println(clientName);
-//            if (activeConnections.contains(clientName)){
-//            	System.err.println("Client exists. Closing the server");
-//            	ss.close();
-//            } else {
-//            	activeConnections.add(clientName);
-//            }
-//            BufferedReader in = new BufferedReader(
-//                    new InputStreamReader(s.getInputStream()));
-//            String line = null;
-//            while ((line = in.readLine()) != null) {
-//                System.out.println(line);
-//            }
         }
 	}
 	
