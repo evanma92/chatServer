@@ -33,11 +33,11 @@ public class TCPServer extends Thread{
 			try {
 				client = ss.accept();
 				clientName = client.getInetAddress().getHostName();
-				if (activeConnections.contains(clientName)){
-					System.err.println("Client exists. Closing the server");
-	            	ss.close();
-	            	break;
-				}
+//				if (activeConnections.contains(clientName)){
+//					System.err.println("Client exists. Closing the server");
+//	            	ss.close();
+//	            	break;
+//				}
 				
 				activeConnections.add(clientName);
 				activeSockets.add(client);

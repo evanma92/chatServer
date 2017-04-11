@@ -8,6 +8,7 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.Socket;
 import java.util.List;
+import java.util.Timer;
 
 public class TCPServerThreads extends Thread{
 	private Socket socket;
@@ -23,6 +24,10 @@ public class TCPServerThreads extends Thread{
 		InputStream inputStream = null;
 		BufferedReader buffReader = null;
 		
+		Ping ping = new Ping(this.socket, this.server);
+		Timer timer = new Timer(true);
+		timer.scheduleAtFixedRate(ping, 30000, 30000);
+		
 		try {
 			inputStream = socket.getInputStream();
 			buffReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -34,6 +39,7 @@ public class TCPServerThreads extends Thread{
 		String line;
 		
 		while(true){
+				
 			try {
 				// Reads from the InputStream
 				line = buffReader.readLine();

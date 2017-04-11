@@ -11,34 +11,31 @@ import java.util.TimerTask;
 public class Ping extends TimerTask {
 
 	private TCPServer server;
+	private Socket socket;
 	
-	public Ping(TCPServer server){
+	public Ping(Socket socket, TCPServer server){
+		this.socket = socket;
 		this.server = server;
 	}
 	
 	@Override
 	public void run() {
-		// Gets a list of active clients
-		List<Socket> activeSockets = server.getActiveSockets();
 		
-		// Pings to each client that's currently active.
-		for (int i=0; i<activeSockets.size(); i++){
-			Writer out;
-			try {
-				out = new OutputStreamWriter(activeSockets.get(i).getOutputStream(), "UTF-8");
-				out.write("From " + server.getName() + ": PING\n");
-	            out.flush();
-			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
+		// Pings to that particular client that's currently active.
+		Writer out;
+		try {
+			out = new OutputStreamWriter(this.socket.getOutputStream(), "UTF-8");
+			out.write("From the server: PING. Please respond with 'PONG' or you will be removed from the server.\n");
+            out.flush();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		
+			
 	}
-	
+		
+		
 }
